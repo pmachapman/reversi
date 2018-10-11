@@ -3,7 +3,10 @@
 *.cache
 *.exe
 *.log
+*.ncb
 *.obj
+*.opt
 *.pdb
+*.plg
 *.user
 UpgradeLog.htm
