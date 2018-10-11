@@ -7,12 +7,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "reversi", "REVERSI.vcxproj"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F026249-3728-4F58-9D54-EE901A0E3F93}.Debug|x64.ActiveCfg = Debug|x64
+		{6F026249-3728-4F58-9D54-EE901A0E3F93}.Debug|x64.Build.0 = Debug|x64
 		{6F026249-3728-4F58-9D54-EE901A0E3F93}.Debug|x86.ActiveCfg = Debug|Win32
 		{6F026249-3728-4F58-9D54-EE901A0E3F93}.Debug|x86.Build.0 = Debug|Win32
+		{6F026249-3728-4F58-9D54-EE901A0E3F93}.Release|x64.ActiveCfg = Release|x64
+		{6F026249-3728-4F58-9D54-EE901A0E3F93}.Release|x64.Build.0 = Release|x64
 		{6F026249-3728-4F58-9D54-EE901A0E3F93}.Release|x86.ActiveCfg = Release|Win32
 		{6F026249-3728-4F58-9D54-EE901A0E3F93}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection

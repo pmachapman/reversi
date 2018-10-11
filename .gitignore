@@ -1,4 +1,5 @@
 .vs
+*.aps
 *.cache
 *.exe
 *.log

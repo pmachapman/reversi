@@ -48,8 +48,8 @@
 #include "reversi.h"
 
 // Exported procedures called from other modules
-LONG APIENTRY ReversiWndProc(HWND, UINT, WPARAM, LONG);
-LONG APIENTRY InverseMessage(HWND, UINT, WPARAM, LONG);
+LRESULT APIENTRY ReversiWndProc(HWND, UINT, WPARAM, LPARAM);
+LRESULT APIENTRY InverseMessage(HWND, UINT, WPARAM, LPARAM);
 
 // Global variables
 PSTR    pDisplayMessage;
@@ -461,7 +461,7 @@ HWND    hWindow)
 {
   flashtimes = 0;
   count = 4;
-  SetTimer(hWindow, 666, 200, (WNDPROC)lpprocInverseMessage);    /* Timer ID is 666 */
+  SetTimer(hWindow, 666, 200, (TIMERPROC)lpprocInverseMessage);    /* Timer ID is 666 */
 }
 
 
@@ -1248,11 +1248,11 @@ register WORD   code)
 //  PURPOSE:  Callback - inverts message bitmap or kills timer 
 //
 
-LONG APIENTRY InverseMessage(
+LRESULT APIENTRY InverseMessage(
 register HWND   hWindow,
 UINT            message,
 WPARAM          wParam,
-LONG            lParam)
+LPARAM          lParam)
 {
   HDC   hDC;
 
@@ -1279,11 +1279,11 @@ LONG            lParam)
 //  PURPOSE:  Processes messages for "Reversi" window  
 //
 
-LONG APIENTRY ReversiWndProc(
+LRESULT APIENTRY ReversiWndProc(
 HWND            hWnd,
 register UINT   message,
 WPARAM          wParam,
-LONG            lParam)
+LPARAM          lParam)
 {
   HMENU         hm;
   PAINTSTRUCT   ps;
@@ -1360,7 +1360,7 @@ LONG            lParam)
                     }
                 }
               else
-                  ShowCursor(wParam);
+                  ShowCursor(wParam != 0);
             }
           if (wParam && (!HIWORD(lParam)))
               SetFocus(hWnd);
