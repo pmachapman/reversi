@@ -1,0 +1,8 @@
+.vs
+*.cache
+*.exe
+*.log
+*.obj
+*.pdb
+*.user
+UpgradeLog.htm
