@@ -1,5 +1,14 @@
+//  THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF 
+//  ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO 
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A 
+//  PARTICULAR PURPOSE.
+//
+//  Copyright (C) 1993-1997  Microsoft Corporation.  All Rights Reserved.
+//
+//  PROGRAM: Reversi.h
+//
+//  PURPOSE: Header definitions for Reversi Sample Game
 
-                        
 #define BoardSize           100 
 #define edge                0
 #define empty               1
@@ -19,7 +28,6 @@
 #define VHARD               46
 #define HINT                50
 #define EXIT                52
-
 
 /* Menu ID's */
 
