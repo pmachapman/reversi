@@ -228,13 +228,12 @@ INT NEAR PASCAL minmax(
 	INT vmin,
 	INT vmax)
 {
-	BYTE *pCurrent, *pPrevious, *pSource, *pDest;
+	BYTE *pCurrent, *pSource, *pDest;
 	INT *pMoves;
 	INT *pBestMove;
 	INT i;
 	INT sq, value, cur_move;
 
-	pPrevious = &b[ply][0];
 	pCurrent = &b[ply + 1][0];
 
 	pSource = &b[ply][11];

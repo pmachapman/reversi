@@ -104,7 +104,6 @@ CHAR    szLossPost[30];
 CHAR    szAbout[20];
 CHAR    szIllegal[70];
 CHAR    szNoPass[70];
-CHAR    szHelpFile[15];
 
 HANDLE  hAccel;
 
@@ -797,7 +796,6 @@ VOID NEAR PASCAL RevMenu(
 
 {
 	HDC           hDC;
-	register INT  cmd;
 
 	if (fThinking)
 		return;
@@ -814,35 +812,8 @@ VOID NEAR PASCAL RevMenu(
 		ShellAbout(hWindow, "Microsoft Windows Reversi", NULL, LoadIcon(hInst, MAKEINTRESOURCE(ID_ICON_MAIN)));
 		break;
 
-	case MN_HELP_INDEX:
-		//TEMPFIX WinHelp(hWindow, (LPSTR)szHelpFile, HELP_INDEX, 0L);
-		break;
-
-	case MN_HELP_USINGHELP:
-		//TEMPFIX WinHelp(hWindow, (LPSTR)NULL, HELP_HELPONHELP, 0L);
-		break;
-
-	case MN_HELP_KEYBOARD:
-		cmd = 0x1e;
-		goto HelpCommon;
-
-	case MN_HELP_COMMANDS:
-		cmd = 0x20;
-		goto HelpCommon;
-
-	case MN_HELP_PLAYING:
-		cmd = 0x21;
-		goto HelpCommon;
-
-	case MN_HELP_RULES:
-		cmd = 0x22;
-	HelpCommon:
-		//TEMPFIX WinHelp(hWindow, (LPSTR)szHelpFile, HELP_CONTEXT, (DWORD)cmd);
-		break;
-
 	case HINT:
 		ShowBestMove(hWindow);
-		return;
 		break;
 
 	case NEW:
@@ -954,7 +925,6 @@ BOOL NEAR PASCAL RevInit(
 	LoadString(hInstance, 12, (LPSTR)szWonPost, 30);
 	LoadString(hInstance, 13, (LPSTR)szIllegal, 70);
 	LoadString(hInstance, 14, (LPSTR)szNoPass, 70);
-	LoadString(hInstance, 15, (LPSTR)szHelpFile, 15);
 
 	hAccel = LoadAccelerators(hInstance, (LPSTR)"MAINACC");
 	pRevClass = (PWNDCLASS)((CHAR *)LocalAlloc(LMEM_ZEROINIT, sizeof(WNDCLASS)));
@@ -1316,11 +1286,6 @@ LRESULT APIENTRY ReversiWndProc(
 		DeleteObject(hbrBlue);
 	}
 
-	// In case WinHelp keys off hWindow, we need to do the HELP_QUIT
-	// here instead of when there is just one instance of help...
-	//
-	//TEMPFIX WinHelp(hWnd, (LPSTR)szHelpFile, HELP_QUIT, 0L);
-
 	PostQuitMessage(0);
 	break;
 
@@ -1404,7 +1369,6 @@ LRESULT APIENTRY ReversiWndProc(
 
 	default:
 		return(DefWindowProc(hWnd, message, wParam, lParam));
-		break;
 	}
 	return(0L);
 }

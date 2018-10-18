@@ -1,4 +1,4 @@
-﻿//{{NO_DEPENDENCIES}}
+//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by REVERSI.RC
 //
@@ -7,12 +7,6 @@
 #define ID_ICON_MAIN                    3
 #define SUBLANG_ENGLISH_NZ              0x05
 #define LANG_ENGLISH                    0x09
-#define MN_HELP_INDEX                   30
-#define MN_HELP_KEYBOARD                31
-#define MN_HELP_COMMANDS                32
-#define MN_HELP_PLAYING                 33
-#define MN_HELP_RULES                   34
-#define MN_HELP_USINGHELP               35
 #define MN_HELP_ABOUT                   36
 #define VK_F1                           0x70
 
