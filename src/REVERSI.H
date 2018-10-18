@@ -9,6 +9,8 @@
 //
 //  PURPOSE: Header definitions for Reversi Sample Game
 
+#pragma once
+
 #define BoardSize           100 
 #define edge                0
 #define empty               1
@@ -29,12 +31,14 @@
 #define HINT                50
 #define EXIT                52
 
-/* Menu ID's */
+VOID NEAR PASCAL paintmove(BYTE b[BoardSize], INT move, BYTE friendly, BYTE enemy);
+LRESULT APIENTRY ReversiWndProc(HWND, UINT, WPARAM, LPARAM);
+LRESULT APIENTRY InverseMessage(HWND, UINT, WPARAM, LPARAM);
 
-#define MN_HELP_INDEX       30
-#define MN_HELP_KEYBOARD    31
-#define MN_HELP_COMMANDS    32
-#define MN_HELP_PLAYING     33
-#define MN_HELP_RULES       34
-#define MN_HELP_USINGHELP   35
-#define MN_HELP_ABOUT       36
+// variable declarations
+extern INT     moves[61];
+extern INT     BestMove[max_depth + 2];
+extern HWND    hWin;
+extern HDC     hDisp;
+extern INT     depth;
+extern INT     direc[];

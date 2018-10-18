@@ -117,6 +117,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\RESOURCE.H" />
+    <ClInclude Include="..\src\REV.H" />
     <ClInclude Include="..\src\REVERSI.H" />
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +127,12 @@
   <ItemGroup>
     <ClCompile Include="..\src\REV.C" />
     <ClCompile Include="..\src\REVERSI.C" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\src\REVERSI.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\blank.cur" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

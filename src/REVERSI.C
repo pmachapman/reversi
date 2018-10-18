@@ -35,7 +35,6 @@
 //  RevChar() - Called on WM_KEYDOWN messages
 //  InverseMessage() - Callback - inverts message bitmap or kills timer
 //  ReversiWndProc() - Processes messages for "Reversi" window
-//  AboutDlgProc() - processes messages for "About" dialog box
 //  WinMain() - calls initialization function, processes message loop
 //
 //  SPECIAL INSTRUCTIONS: N/A
@@ -45,11 +44,12 @@
 #include <windowsx.h>
 #include <process.h>
 #include <stdlib.h>
+#include "resource.h"
+#include "rev.h"
 #include "reversi.h"
 
 // Exported procedures called from other modules
-LRESULT APIENTRY ReversiWndProc(HWND, UINT, WPARAM, LPARAM);
-LRESULT APIENTRY InverseMessage(HWND, UINT, WPARAM, LPARAM);
+
 
 // Global variables
 PSTR    pDisplayMessage;
@@ -109,7 +109,6 @@ CHAR    szHelpFile[15];
 HANDLE  hAccel;
 
 POINT   MousePos;
-FARPROC lpprocAbout;
 
 INT     depth;
 INT     BestMove[max_depth + 2];
@@ -125,11 +124,6 @@ INT     moves[61] = { 11,18,81,88, 13,31,16,61,
 					 22,27,72,77,
 			  0 };
 
-// declarations of functions in rev.c
-INT NEAR PASCAL minmax(BYTE b[max_depth + 2][100], INT move, INT friendly,
-	INT enemy, INT ply, INT vmin, INT vmax);
-VOID NEAR PASCAL makemove(BYTE b[], INT move, INT friendly, INT enemy);
-INT NEAR PASCAL legalcheck(BYTE b[], INT move, INT friendly, INT enemy);
 
 #define LONG2POINT(l, pt)               ((pt).x = (SHORT)LOWORD(l), (pt).y = (SHORT)HIWORD(l))
 
@@ -817,7 +811,7 @@ VOID NEAR PASCAL RevMenu(
 		break;
 
 	case MN_HELP_ABOUT:
-		DialogBox(hInst, MAKEINTRESOURCE(3), hWindow, (DLGPROC)lpprocAbout);
+		ShellAbout(hWindow, "Microsoft Windows Reversi", NULL, LoadIcon(hInst, MAKEINTRESOURCE(ID_ICON_MAIN)));
 		break;
 
 	case MN_HELP_INDEX:
@@ -914,7 +908,7 @@ VOID NEAR PASCAL RevMenu(
 //
 //  FUNCTION: RevInit()
 //
-//  PURPOSE:  Initializes window data and registers window 
+//  PURPOSE:  Initializes window data and registers window
 //
 
 BOOL NEAR PASCAL RevInit(
@@ -970,15 +964,15 @@ BOOL NEAR PASCAL RevInit(
 	curLegal = LoadCursor(NULL, IDC_CROSS);
 	curIllegal = LoadCursor(NULL, IDC_ARROW);
 	curThink = LoadCursor(NULL, IDC_WAIT);
-	curBlank = LoadCursor(hInstance, MAKEINTRESOURCE(1));
+	curBlank = LoadCursor(hInstance, MAKEINTRESOURCE(ID_CUR_BLANK));
 	if (!curLegal || !curIllegal || !curThink || !curBlank)
 		return(FALSE);
-	pRevClass->hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(3));
+	pRevClass->hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(ID_ICON_MAIN));
 
 	pRevClass->lpszClassName = (LPSTR)"Reversi";
 	pRevClass->hbrBackground = ((COLOR) ? hbrGreen : hbrWhite);
 	pRevClass->lpfnWndProc = ReversiWndProc;
-	pRevClass->lpszMenuName = MAKEINTRESOURCE(1);
+	pRevClass->lpszMenuName = MAKEINTRESOURCE(ID_MENU_MAIN);
 	pRevClass->hInstance = hInstance;
 	pRevClass->style = CS_VREDRAW | CS_HREDRAW | CS_BYTEALIGNCLIENT;
 
@@ -996,7 +990,7 @@ BOOL NEAR PASCAL RevInit(
 //
 //  FUNCTION: RevMouseClick()
 //
-//  PURPOSE:  Handle mouse click or keyboard space or CR 
+//  PURPOSE:  Handle mouse click or keyboard space or CR
 //
 
 VOID NEAR PASCAL RevMouseClick(
@@ -1053,7 +1047,7 @@ VOID NEAR PASCAL RevMouseClick(
 //
 //  FUNCTION: Next()
 //
-//  PURPOSE:  Find next square 
+//  PURPOSE:  Find next square
 //
 
 VOID NEAR PASCAL Next(
@@ -1075,7 +1069,7 @@ VOID NEAR PASCAL Next(
 //
 //  FUNCTION: Previous()
 //
-//  PURPOSE:  Find previous square 
+//  PURPOSE:  Find previous square
 //
 
 VOID NEAR PASCAL Previous(
@@ -1096,7 +1090,7 @@ VOID NEAR PASCAL Previous(
 //
 //  FUNCTION: ShowNextMove()
 //
-//  PURPOSE:  Show next legal move 
+//  PURPOSE:  Show next legal move
 //
 
 VOID NEAR PASCAL ShowNextMove(
@@ -1142,7 +1136,7 @@ VOID NEAR PASCAL ShowNextMove(
 //
 //  FUNCTION: RevChar()
 //
-//  PURPOSE:  Called on WM_KEYDOWN messages 
+//  PURPOSE:  Called on WM_KEYDOWN messages
 //
 
 VOID NEAR PASCAL RevChar(
@@ -1238,7 +1232,7 @@ VOID NEAR PASCAL RevChar(
 //
 //  FUNCTION: InverseMessage()
 //
-//  PURPOSE:  Callback - inverts message bitmap or kills timer 
+//  PURPOSE:  Callback - inverts message bitmap or kills timer
 //
 
 LRESULT APIENTRY InverseMessage(
@@ -1268,7 +1262,7 @@ LRESULT APIENTRY InverseMessage(
 //
 //  FUNCTION: ReversiWndProc()
 //
-//  PURPOSE:  Processes messages for "Reversi" window  
+//  PURPOSE:  Processes messages for "Reversi" window 
 //
 
 LRESULT APIENTRY ReversiWndProc(
@@ -1370,7 +1364,7 @@ LRESULT APIENTRY ReversiWndProc(
 
 		LONG2POINT(lParam, pt);  // convert LONG lParam to POINT structure
 		if (!fThinking)
-#ifdef ORGCODE      
+#ifdef ORGCODE
 			RevMouseMove(MAKEPOINT(lParam));
 #else
 			RevMouseMove(pt);
@@ -1413,39 +1407,7 @@ LRESULT APIENTRY ReversiWndProc(
 		break;
 	}
 	return(0L);
-	}
-
-//
-//  FUNCTION: AboutDlgProc(HWND, WORD, WORD, LONG)
-//
-//  PURPOSE:  Processes messages for "About" dialog box
-//
-//  MESSAGES:
-//
-//      WM_INITDIALOG - initialize dialog box
-//      WM_COMMAND    - Input received
-//
-
-BOOL APIENTRY AboutDlgProc(
-	HWND        hDlg,
-	WORD        message,
-	WORD        wParam,
-	LONG        lParam)
-
-{
-	if (message == WM_COMMAND)
-	{
-		EndDialog(hDlg, TRUE);
-		return(TRUE);
-	}
-	if (message == WM_INITDIALOG)
-		return(TRUE);
-	else
-		return(FALSE);
-	UNREFERENCED_PARAMETER(wParam);
-	UNREFERENCED_PARAMETER(lParam);
 }
-
 
 //
 //  FUNCTION: WinMain
@@ -1485,7 +1447,6 @@ int WINAPI WinMain(
 	TYMIN = 45;
 	fThinking = FALSE;
 
-	lpprocAbout = MakeProcInstance((FARPROC)AboutDlgProc, hInstance);
 	hWnd = CreateWindow((LPSTR) "Reversi",
 		fCheated ? (LPSTR)szReversiPractice : (LPSTR)szReversi,
 		WS_TILEDWINDOW,

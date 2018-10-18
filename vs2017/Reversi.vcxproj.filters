@@ -18,6 +18,12 @@
     <ClInclude Include="..\src\REVERSI.H">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\RESOURCE.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\REV.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\src\REVERSI.RC">
@@ -31,5 +37,15 @@
     <ClCompile Include="..\src\REVERSI.C">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\src\REVERSI.ICO">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\blank.cur">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

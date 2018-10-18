@@ -22,50 +22,8 @@
 #include <windowsx.h>
 #include <process.h>
 #include <stdlib.h>
+#include "rev.h"
 #include "reversi.h"
-
-// declarations of function in reversi.c
-VOID NEAR PASCAL paintmove(BYTE b[BoardSize], INT move, INT friendly,
-	INT enemy);
-
-// variable declarations
-extern INT     moves[61];
-extern INT     BestMove[max_depth + 2];
-extern HWND    hWin;
-extern HDC     hDisp;
-extern INT     depth;
-extern INT     direc[];
-
-
-//  Indexes for computing scores and whether or not a player has
-//  any pieces on the board.  Very order dependant.
-
-BYTE PieceFlags[] = { 0x00 ,      // Ignore sides
-			0x00 ,      // Ignore blanks
-			0x01 ,      // Human has a piece
-			0x02 ,      // Computer has a piece
-};
-
-
-//
-//  The scoring tables are used to evaluate the board
-//  position.  The corners of the board change value
-//  according to whether a given square is occupied or
-//  not.  This can be done dynamically, saving ~ 1K
-//  worth of data space but costing an as of yet
-//  undetermined performance hit.
-//
-
-#define B11     11    // Offsets to particular squares
-#define B18     18 
-#define B81     81 
-#define B88     88 
-
-#define maskb11     0x08    // Masks used for indexing into Scoring tables.
-#define maskb18     0x04
-#define maskb81     0x02
-#define maskb88     0x01
-
 
 //
 //  FUNCTION: finalscore()
@@ -258,7 +216,7 @@ INT NEAR PASCAL score(
 //
 //  FUNCTION: minmax()
 //
-//  PURPOSE:  Play human move then recursively play computer move 
+//  PURPOSE:  Play human move then recursively play computer move
 //
 
 INT NEAR PASCAL minmax(
