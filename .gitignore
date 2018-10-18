@@ -2,11 +2,17 @@
 *.aps
 *.cache
 *.exe
+*.idb
+*.ilk
+*.lastcodeanalysissucceeded
 *.log
 *.ncb
 *.obj
 *.opt
 *.pdb
 *.plg
+*.res
+*.tlog
 *.user
+*.xml
 UpgradeLog.htm

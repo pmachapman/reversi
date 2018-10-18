@@ -270,7 +270,6 @@ INT vmax)
     INT *pBestMove;
     INT i;
     INT sq, value, cur_move;
-    INT count=0;    // not used !
 
     pPrevious = &b[ply][0];
     pCurrent =  &b[ply+1][0];

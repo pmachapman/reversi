@@ -823,7 +823,7 @@ INT             idval)
           break;
 
       case MN_HELP_ABOUT:
-          DialogBox(hInst, MAKEINTRESOURCE(3), hWindow, (WNDPROC)lpprocAbout);
+          DialogBox(hInst, MAKEINTRESOURCE(3), hWindow, (DLGPROC)lpprocAbout);
           break;
 
       case MN_HELP_INDEX:
@@ -1256,10 +1256,6 @@ LPARAM          lParam)
 {
   HDC   hDC;
 
-  message;
-  wParam;
-  lParam;
-
   if (flashtimes <= count)
     {
       hDC = GetDC(hWindow);
@@ -1269,6 +1265,9 @@ LPARAM          lParam)
     }
   else
       KillTimer(hWindow, 666);
+  UNREFERENCED_PARAMETER(message);
+  UNREFERENCED_PARAMETER(wParam);
+  UNREFERENCED_PARAMETER(lParam);
   return(0L);
 }
 
@@ -1461,17 +1460,24 @@ LONG        lParam)
 //  PURPOSE: calls initialization function, processes message loop
 //
 
-int APIENTRY WinMain(
-    HINSTANCE hInstance,
-    HINSTANCE hPrev,
-    LPSTR     lpCmdLine,
-    int       cmdShow
+int WINAPI WinMain(
+#ifdef _MSC_VER
+	_In_ HINSTANCE hInstance,
+	_In_opt_ HINSTANCE hPrevInstance,
+	_In_ LPSTR lpCmdLine,
+	_In_ int nShowCmd
+#else
+	HINSTANCE hInstance,
+	HINSTANCE hPrevInstance,
+	LPSTR lpCmdLine,
+	int nShowCmd
+#endif
 ) {
   HWND hWnd;
   MSG   msg;
 
   hInst = hInstance;
-  if (!hPrev)
+  if (!hPrevInstance)
     {
       if (!RevInit(hInstance))
           return(FALSE);
@@ -1534,7 +1540,7 @@ int APIENTRY WinMain(
   if (!hWnd)
       return(FALSE);
 
-  ShowWindow(hWnd, cmdShow);
+  ShowWindow(hWnd, nShowCmd);
   UpdateWindow(hWnd);
 
   // Messaging Loop
@@ -1546,5 +1552,6 @@ int APIENTRY WinMain(
           DispatchMessage((LPMSG)&msg);
         }
     }
+  UNREFERENCED_PARAMETER(lpCmdLine);
   return(0);
 }
